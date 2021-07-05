@@ -3,16 +3,14 @@ import calcScroll from './calcScroll';
 const modals = () => {
     
     let btnPressed = false;
-    const scrollHide = calcScroll(),
-          gift = document.querySelector('.fixed-gift');
+    const scrollHide = calcScroll();
 
     /* Функция отвечает за привязку модального окна к определенному тригеру */
     function bindModal(triggerSelector, modalSelector, closeSelector, triggerOff = false) {
         const trigger = document.querySelectorAll(triggerSelector),
               modal = document.querySelector(modalSelector),
-              close = document.querySelector(closeSelector),
-              windows = document.querySelectorAll('[data-modal]');
-        
+              close = document.querySelector(closeSelector);
+        /* При клике на каждый триггер открываем модальное окно */
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
                 if (e.target) {
@@ -20,76 +18,74 @@ const modals = () => {
                 }
 
                 btnPressed = true;
-
+                /* Удаляем триггер при открытие окна, если в вызове стоит true */
                 if (triggerOff == true) {
                     item.remove();
                 }
-                hideModal(windows);
+                hidePrevModal();
                 openModal(modal);
-                addMargin(gift);
+                addMargin();
             });
         });
-
+        /* По клику на кнопку закрытия закрываем модальное окно */
         close.addEventListener('click', () => {
-            hideModal(windows);
             closeModal(modal);
-            hideMargin(gift);
+            hideMargin();
         });
-
+        /* По клику по подложке модального окна закрываем окно */
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
-                hideModal(windows);
+                hidePrevModal();
                 closeModal(modal);
-                hideMargin(gift);
+                hideMargin();
             }
         });
 
     }
-
+    /* Функция по открытию модального окна */
     function openModal(item) {
         item.style.display = 'block';
         document.body.style.overflow = 'hidden';
         clearInterval(showModalByTime);
     }
-
+    /* Функция по закрытию модального окна */
     function closeModal(item) {
         item.style.display = 'none';
         document.body.style.overflow = '';
     }
-    /* При открытии нового модального окна старые будут закрываться */
-    function hideModal(item) {
-        item.forEach(elem => {
+    /* При открытии нового модального окна предидущее будет закрываться */
+    function hidePrevModal() {
+        document.querySelectorAll('[data-modal]').forEach(elem => {
             elem.style.display = 'none';
             elem.classList.add('animated', 'fadeIn');
         });
     }
-
-    function addMargin(item) {
+    /* Добавление отступа для модального окна и подарка */
+    function addMargin() {
         document.body.style.marginRight = `${scrollHide}px`;
-        item.style.marginRight = `${scrollHide}px`;
+        document.querySelector('.fixed-gift').style.marginRight = `${scrollHide}px`;
     }
-
-    function hideMargin(item) {
+    /* Удаление отступа для модального окна и подарка */
+    function hideMargin() {
         document.body.style.marginRight = `0px`;
-        item.style.marginRight = `0px`;
+        document.querySelector('.fixed-gift').style.marginRight = `0px`;
     }
-
+    /* Открытие модального окна с подарком при скролле до конца страницы */
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight && !btnPressed) {
             document.querySelector('.popup-gift').style.display = 'block';
-            gift.remove();
+            document.querySelector('.fixed-gift').remove();
             document.body.style.overflow = "hidden";
-            addMargin(gift);
+            addMargin();
             window.removeEventListener('scroll', showModalByScroll);
         }
     }
-
     window.addEventListener('scroll', showModalByScroll);
-
+    /* Открытие модального окна через минуту */
     const showModalByTime = setTimeout(() => {
         document.querySelector('.popup-consultation').style.display = 'block';
         document.body.style.overflow = "hidden";
-        addMargin(gift);
+        addMargin();
     }, 60000);
 
     
