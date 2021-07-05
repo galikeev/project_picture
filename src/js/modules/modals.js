@@ -13,27 +13,24 @@ const modals = () => {
                 if (e.target) {
                     e.preventDefault();
                 }
-                btnPressed = true;
+                btnPressed = true; /* Означает, что нажали на какой-то из триггеров  */
                 /* Удаляем триггер при открытии окна, если в вызове стоит true */
                 if (deleteTrigger == true) {
                     item.remove();
                 }
                 hidePrevModal();
                 openModal(modal);
-                addMargin();
             });
         });
         /* По клику на кнопку закрытия закрываем модальное окно */
         close.addEventListener('click', () => {
             closeModal(modal);
-            hideMargin();
         });
         /* По клику по подложке модального окна закрываем окно */
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 hidePrevModal();
                 closeModal(modal);
-                hideMargin();
             }
         });
     }
@@ -41,12 +38,14 @@ const modals = () => {
     function openModal(item) {
         item.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        // clearInterval(showModalByTime);
+        clearInterval(byTime);
+        addMargin();
     }
     /* Функция по закрытию модального окна */
     function closeModal(item) {
         item.style.display = 'none';
         document.body.style.overflow = '';
+        hideMargin();
     }
     /* При открытии нового модального окна предидущее будет закрываться */
     function hidePrevModal() {
@@ -69,36 +68,20 @@ const modals = () => {
         document.querySelector('.pageup').style.marginRight = `0px`;
     }
     /* Открытие модального окна с подарком при скролле до конца страницы */
-    function showModalByScroll() {
-        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight && !btnPressed) {
-            document.querySelector('.popup-gift').style.display = 'block';
-            document.querySelector('.fixed-gift').remove();
-            document.body.style.overflow = "hidden";
-            addMargin();
-            window.removeEventListener('scroll', showModalByScroll);
-        }
+    function showModalByScroll(selector) {
+        window.addEventListener('scroll', () => {
+            let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+            if (!btnPressed && (window.pageYOffset + document.documentElement.clientHeight >= scrollHeight)) {
+                document.querySelector(selector).click(); /* Имитирует клик (как будто кликнули по этому элементу) */
+            }
+        });
     }
     /* Открытие модального окна через минуту */
-    // const showModalByTime = setTimeout(() => {
-    //     document.querySelector('.popup-consultation').style.display = 'block';
-    //     document.body.style.overflow = "hidden";
-    //     addMargin();
-    // }, 60000);
+    let byTime;
     function showModalByTime(selector, time) {
-        setTimeout(() => {
-            let displayStyle;
-            document.querySelectorAll('[data-modal').forEach(item => {
-                /* Если у каждого окна дисплей = нон, то в переменную записываем блок */
-                if (getComputedStyle(item).display !== 'none') {
-                    displayStyle = 'block';
-                }
-                /* Если у окна дисплей не блок, то устанавливаем блок  */
-                if (!displayStyle) {
-                    document.querySelector(selector).style.display = 'block';
-                    document.body.style.overflow = "hidden";
-                    addMargin();
-                }
-            });
+        byTime = setTimeout(() => {
+            document.querySelector(selector).click();
+            addMargin();
         }, time);
     }
     /* Функция по высчитыванию размера бокового скролла */
@@ -114,13 +97,11 @@ const modals = () => {
         return scrollWidth;
     }
 
-    window.addEventListener('scroll', showModalByScroll);
-
     bindModal('.button-design', '.popup-design', '.popup-design .popup-close');
     bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
     bindModal('.fixed-gift', '.popup-gift', '.popup-gift .popup-close', true);
-
-    showModalByTime ('.popup-consultation', 60000);
+    showModalByScroll('.fixed-gift');
+    showModalByTime('.button-consultation', 60000);
 };
 
 export default modals;

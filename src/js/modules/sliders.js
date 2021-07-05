@@ -1,4 +1,4 @@
-const sliders = (slides, dir, prev, next) => {
+const sliders = (slides, direction, prev, next) => {
 
     let slideIndex = 1;
     let paused = false;
@@ -49,7 +49,7 @@ const sliders = (slides, dir, prev, next) => {
     }
 
     function activateAnimation() {
-        if (dir === 'vertical') {
+        if (direction === 'vertical') {
             paused = setInterval(function() {
                 plusSlides(1);
                 items[slideIndex - 1].classList.add('slideInDown');
