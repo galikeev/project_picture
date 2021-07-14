@@ -1,10 +1,9 @@
 const sliders = (slides, direction, prev, next) => {
 
-    let slideIndex = 1;
+    let slideIndex = 1; /* Данная переменная будет отвечать за текущий слайд */
     let paused = false;
-
     const items = document.querySelectorAll(slides);
-
+    /* Функция, которая будет отвечать за перемещение slideIndex и слайда */
     function showSlides(n) {
         if (n > items.length) {
             slideIndex = 1;
@@ -22,7 +21,7 @@ const sliders = (slides, direction, prev, next) => {
         items[slideIndex - 1].style.display = 'block';
     }
 
-    showSlides(slideIndex);
+    showSlides(slideIndex); /* При запуске функции скроет все слайды и покажет только первый */
 
     function plusSlides(n) {
         showSlides(slideIndex += n);

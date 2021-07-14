@@ -59,7 +59,6 @@ const modals = () => {
         document.body.style.marginRight = `${scrollHide}px`;
         document.querySelector('.fixed-gift').style.marginRight = `${scrollHide}px`;
         document.querySelector('.pageup').style.marginRight = `${scrollHide}px`;
-
     }
     /* Удаление отступа для модального окна и подарка */
     function hideMargin() {

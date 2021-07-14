@@ -108,6 +108,8 @@ h4 {
 }
 .header .container {
   padding: 0;
+  position: relative;
+  z-index: 17;
 }
 .header .burger {
   margin-right: -1rem;

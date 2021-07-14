@@ -1,15 +1,11 @@
-// import checkNumInputs from './checkNumInputs';
 import {postData} from '../services/requests';
 
 const forms = () => {
     
     const form = document.querySelectorAll('form'),
           inputs = document.querySelectorAll('input'),
-          upload = document.querySelectorAll('[name="upload"]'),
-          windows = document.querySelectorAll('[data-modal]'),
-          gift = document.querySelector('.fixed-gift');
-
-    // checkNumInputs('input[name="user_phone"]');
+          textarea = document.querySelector('textarea'),
+          upload = document.querySelectorAll('[name="upload"]');
     
     const message = {
         loading: 'Загрузка..',
@@ -20,63 +16,72 @@ const forms = () => {
         fail: 'assets/img/fail.png'
     };
 
+    /* Переменная с путями */
     const path = {
         designer: 'assets/server.php',
         question: 'assets/question.php'
     };
 
-
+    /* Функция по очищению инпутов */
     const clearInputs = () => {
         inputs.forEach(item => {
             item.value = '';
         });
+        textarea.value = '';
         upload.forEach(item => {
             item.previousElementSibling.textContent = 'Файл не выбран';
         });
     };
 
+    /* Перебираем каждый upload и вешаем событие инпут */
     upload.forEach(item => {
         item.addEventListener('input', () => {
-            console.log(item.files[0]);
+            console.log(item.files[0]); /* Показываем имя первого файла */
             let dots;
-            const arr = item.files[0].name.split('.');
-            if (arr[0].length > 6) {
+            const arr = item.files[0].name.split('.'); /* Разбиваем название файла точкой */
+            if (arr[0].length > 6) { /* Если первая часть больше 6 символов, то добавляем ... */
                 dots = '...';
+                /* Если меньше, то одна точка */
             } else {
                 dots = '.';
             }
-            const name = arr[0].substring(0, 6) + dots + arr[1];
-            item.previousElementSibling.textContent = name;
+            /* Формируем имя */
+            const name = arr[0].substring(0, 6) + dots + arr[1]; /* Первая часть с первого по 6 символ(substring) + точки + вторая часть */
+            item.previousElementSibling.textContent = name; /* Добавляем имя к соседнему предидущему элементу от upload */
         });
     });
 
+    /* Перебираем каждую форму и навешиваем событие submit */
     form.forEach(item => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            let statusMessage = document.createElement('div');
-            statusMessage.classList.add('status');
-            item.parentNode.appendChild(statusMessage);
+            let statusMessage = document.createElement('div'); /* Создали новый блок */
+            statusMessage.classList.add('status'); /* Добавили класс статус */
+            item.parentNode.appendChild(statusMessage); /* Добавили блок в родителя формы */
 
+            /* Убираем форму */
             item.classList.add('animated', 'fadeOutUp');
             setTimeout(() => {
                 item.style.display = 'none';
             }, 400);
 
-            let statusImg = document.createElement('img');
-            statusImg.setAttribute('src', message.spinner);
-            statusImg.classList.add('animated', 'fadeInUp');
-            statusMessage.appendChild(statusImg);
+            let statusImg = document.createElement('img'); /* Создали тэг img */
+            statusImg.setAttribute('src', message.spinner); /* Устанавливаем атрибут src и помещаем в него адрес message.spinner */
+            statusImg.classList.add('animated', 'fadeInUp'); /* Добавили анимацию */
+            statusMessage.appendChild(statusImg); /* Добавляем img в новый блок */
 
-            let textMessage = document.createElement('div');
-            textMessage.textContent = message.loading;
-            statusMessage.appendChild(textMessage);
+            let textMessage = document.createElement('div'); /* Создали блок */
+            textMessage.textContent = message.loading; /* Запишем текст message.loading */
+            statusMessage.appendChild(textMessage); /* Добавляем созданный блок в statusMessage */
 
             const formData = new FormData(item);
             let api;
             
+            /* Если у формы где-то есть класс popup-design или calc-form */
             if ((item.closest('.popup-design')) || item.classList.contains('calc-form')) {
                 api = path.designer;
+                /* Если нет */
             } else {
                 api = path.question;
             }
@@ -99,12 +104,6 @@ const forms = () => {
                         item.style.display = 'block';
                         item.classList.remove('fadeOutUp');
                         item.classList.add('fadeInUp');
-                        // windows.forEach(item => {
-                        //     item.style.display = "none";    
-                        // });
-                        document.body.style.overflow = '';
-                        document.body.style.marginRight = `0px`;
-                        gift.style.marginRight = `0px`;
                     }, 3000);
                 });
         });
