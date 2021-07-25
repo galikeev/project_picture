@@ -14,9 +14,10 @@ const modals = () => {
                     e.preventDefault();
                 }
                 btnPressed = true; /* Означает, что нажали на какой-то из триггеров  */
-                /* Удаляем триггер при открытии окна, если в вызове стоит true */
+                /* Удаляем/скрываем триггер при открытии окна, если в вызове стоит true */
                 if (deleteTrigger == true) {
-                    item.remove();
+                    item.style.display = 'none';
+                    // item.remove();
                 }
                 hidePrevModal();
                 openModal(modal);

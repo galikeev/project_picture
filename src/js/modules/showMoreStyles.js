@@ -1,9 +1,10 @@
-import { getResource } from "../services/requests";
+import {getResource} from "../services/requests";
 
 const showMoreStyles = (trigger, wrapper) => {
 
     const btn = document.querySelector(trigger);
 
+    // const cards = document.querySelectorAll(cards);
     /* Способ с данными из верстки */
     // cards.forEach(item => {
     //     item.classList.add('animated', 'fadeInUp');
@@ -14,7 +15,6 @@ const showMoreStyles = (trigger, wrapper) => {
     //         item.classList.remove('hidden-lg', 'hidden-md', 'hidden-sm', 'hidden-xs');
     //         item.classList.add('col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
     //     });
-
     //     btn.remove();
     // });
 
@@ -34,7 +34,6 @@ const showMoreStyles = (trigger, wrapper) => {
             let card = document.createElement('div');
 
             card.classList.add('animated', 'fadeInUp', 'col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
-
             card.innerHTML = `
                 <div class="styles-block">
                     <img src=${src} alt="style">
@@ -42,7 +41,6 @@ const showMoreStyles = (trigger, wrapper) => {
                     <a href=${link}>Подробнее</a>
                 </div>
             `;
-
             document.querySelector(wrapper).appendChild(card);
         });
     }
@@ -58,16 +56,6 @@ const showMoreStyles = (trigger, wrapper) => {
         `;
         document.querySelector(wrapper).appendChild(statusMessage);
     }
-
-
-    // <div class="hidden-lg hidden-md hidden-sm hidden-xs styles-2">
-	// 				<div class=styles-block>
-	// 					<img src=assets/img/styles-5.jpg alt>
-	// 					<h4>Пастелью</h4>
-	// 					<a href="#">Подробнее</a>
-	// 				</div>
-	// 			</div>
-
 };
 
 export default showMoreStyles;
