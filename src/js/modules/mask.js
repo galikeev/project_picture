@@ -4,7 +4,7 @@ const mask = (selector) => {
     let setCursorPosition = (pos, elem) => {
 
         elem.addEventListener('click', () => {
-			elem.selectionStart = elem.selectionEnd = elem.value.length; /* если кликаем на начало или конец, то будем будет присваивать значение количества элементов */
+			elem.selectionStart = elem.selectionEnd = elem.value.length; /* если начало и конец совпадают, то будем будет присваивать значение количества элементов */
 		});
 
         elem.focus(); /* Установили фокус на элементе */
