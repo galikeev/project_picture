@@ -937,9 +937,11 @@ h4 {
   border-bottom: 3rem solid #f7e7e6;
 }
 .often-questions .ui-accordion-header-active {
+  position: relative;
   cursor: auto;
   color: #c51abb;
   margin-bottom: 4rem;
+  z-index: 5;
 }
 .often-questions .ui-accordion-header-active span {
   border-bottom: none;
