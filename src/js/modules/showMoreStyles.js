@@ -20,13 +20,13 @@ const showMoreStyles = (trigger, wrapper) => {
 
     /* Способ с данными из сервера */
     btn.addEventListener('click', function() {
-        getResource('assets/db.json')
-            .then(res => createCards(res.styles))
+        getResource('http://localhost:3000/styles')
+            .then(res => createCards(res))
             .catch(() => showError());
 
         setTimeout(() => {
             this.remove();
-        }, 100);
+        }, 300);
     });
 
     function createCards(response) {
