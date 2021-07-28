@@ -2,12 +2,12 @@ const accordion = (triggerSelector) => {
 
     const trigger = document.querySelectorAll(triggerSelector);
 
-    trigger.forEach(btn => {
-        btn.addEventListener('click', function() {
-            if (!this.classList.contains('ui-accordion-header-active')) {
-                showContent(btn);
+    trigger.forEach(btn => { /* перебираем все кнопки */
+        btn.addEventListener('click', function() { /* на каждую кнопку вешаем клик */
+            if (!this.classList.contains('ui-accordion-header-active')) { /* если у текущей кнопки нет класс активности */
+                showContent(btn); /* то вызываем функцию по открытию */
             } else {
-                hideContent();
+                hideContent(); /* иначе закрываем */
             }
         });
     });
