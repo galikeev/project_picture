@@ -2,11 +2,11 @@ import {postData} from '../services/requests';
 
 const drop = () => {
 
-    const fileInputs = document.querySelectorAll('[name="upload"]');
+    const fileInputs = document.querySelectorAll('[name="upload"]'); /* получаем все элементы для загрузки изображения */
 
-    ['dragenter', 'dragleave', 'dragover', 'drop'].forEach(eventName => {
-        fileInputs.forEach(input => {
-            input.addEventListener(eventName, preventDefaults, false);
+    ['dragenter', 'dragleave', 'dragover', 'drop'].forEach(eventName => { /* перебираем массив событий */
+        fileInputs.forEach(input => { /* перебираем все элементы для загрузки */
+            input.addEventListener(eventName, preventDefaults, false); /* на каждый элемент для загрузки вешаем каждое событие, которое перебрали и отменяем стандартное поведение браузера */
         });
     });
 
@@ -39,7 +39,7 @@ const drop = () => {
 
     fileInputs.forEach(input => {
         input.addEventListener('drop', (e) => {
-            input.files = e.dataTransfer.files;
+            input.files = e.dataTransfer.files; /* берем те файлы, которые мы перетаскиваем и засовываем их в текущий инпут */
             if (input.getAttribute('data-upload')) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -52,6 +52,7 @@ const drop = () => {
 						});
 				});
 			}
+            /* Добавляем точки к длинным словам */
             let dots;
             const arr = input.files[0].name.split('.');
             if (arr[0].length > 6) {
