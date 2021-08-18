@@ -108,6 +108,8 @@ h4 {
 }
 .header .container {
   padding: 0;
+  position: relative;
+  z-index: 17;
 }
 .header .burger {
   margin-right: -1rem;
@@ -906,7 +908,25 @@ h4 {
   margin-top: 1rem;
   background-color: #f7e7e6;
   padding: 3rem 4rem;
+  display: none;
 }
+.often-questions .accordion-block-active {
+  display: block;
+}
+/* .often-questions .accordion-block {
+  background-color: #f7e7e6;
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  height: 0;
+  overflow: hidden;
+}
+.often-questions .accordion-block-active {
+  overflow: visible;
+  margin-top: 1rem;
+  padding: 3rem 4rem;
+  opacity: 1;
+  height: auto;
+} */
 .often-questions .accordion-block:before {
   content: '';
   position: absolute;
@@ -917,16 +937,16 @@ h4 {
   border-bottom: 3rem solid #f7e7e6;
 }
 .often-questions .ui-accordion-header-active {
+  position: relative;
   cursor: auto;
   color: #c51abb;
-  margin-bottom: 0;
+  margin-bottom: 4rem;
+  z-index: 5;
 }
 .often-questions .ui-accordion-header-active span {
   border-bottom: none;
 }
-.often-questions .ui-accordion-content-active {
-  margin-bottom: 4rem;
-}
+
 .often-questions .brushes {
   position: absolute;
   bottom: 0;
@@ -1258,6 +1278,24 @@ h4 {
   transform: translateX(-50%) !important;
   padding: 3rem 6rem 4rem 6rem;
 }
+
+.status {
+  text-align: center;
+}
+
+.pageup {
+  opacity: 0;
+  width: 26px ;
+  height: 26px;
+  position: fixed;
+  bottom: 100px;
+  right: 40px;
+  z-index: 30;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid white;
+}
+
 @media (max-width: 1399px) {
   .paints {
     display: none;
